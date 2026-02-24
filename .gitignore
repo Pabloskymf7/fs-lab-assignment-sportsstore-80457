@@ -4,3 +4,7 @@
 [Oo]bj/
 *.user
 *.suo
+
+# Logs de Serilog
+**/Logs/
+*.log
