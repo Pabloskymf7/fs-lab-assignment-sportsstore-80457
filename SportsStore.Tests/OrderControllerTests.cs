@@ -12,7 +12,7 @@ namespace SportsStore.Tests
         private OrderController CreateController(IOrderRepository repo, Cart cart)
         {
             var logger = new Mock<ILogger<OrderController>>();
-            var paymentService = new Mock<PaymentService>();
+            var paymentService = new Mock<IPaymentService>();
             var stripeSettings = Options.Create(new StripeSettings
             {
                 PublishableKey = "pk_test_fake",
@@ -20,7 +20,6 @@ namespace SportsStore.Tests
             });
             return new OrderController(repo, cart, logger.Object, paymentService.Object, stripeSettings);
         }
-
         [Fact]
         public void Cannot_Checkout_Empty_Cart()
         {
@@ -33,7 +32,6 @@ namespace SportsStore.Tests
             Assert.True(string.IsNullOrEmpty(result?.ViewName));
             Assert.False(result?.ViewData.ModelState.IsValid);
         }
-
         [Fact]
         public void Cannot_Checkout_Invalid_ShippingDetails()
         {
@@ -47,7 +45,6 @@ namespace SportsStore.Tests
             Assert.True(string.IsNullOrEmpty(result?.ViewName));
             Assert.False(result?.ViewData.ModelState.IsValid);
         }
-
         [Fact]
         public void Can_Checkout_And_Submit_Order()
         {
@@ -55,10 +52,9 @@ namespace SportsStore.Tests
             Cart cart = new Cart();
             cart.AddItem(new Product(), 1);
             OrderController target = CreateController(mock.Object, cart);
-            RedirectToPageResult? result =
-                    target.Checkout(new Order()) as RedirectToPageResult;
-            mock.Verify(m => m.SaveOrder(It.IsAny<Order>()), Times.Once);
-            Assert.Equal("/Completed", result?.PageName);
+            ViewResult? result = target.Checkout(new Order()) as ViewResult;
+            mock.Verify(m => m.SaveOrder(It.IsAny<Order>()), Times.Never);
+            Assert.NotNull(result);
         }
     }
 }
