@@ -1,7 +1,7 @@
 ﻿using Stripe;
 namespace SportsStore.Models
 {
-    public class PaymentService
+    public class PaymentService : IPaymentService
     {
         public PaymentIntent CreatePaymentIntent(Cart cart)
         {

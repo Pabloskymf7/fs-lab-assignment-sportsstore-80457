@@ -11,12 +11,12 @@ namespace SportsStore.Controllers
         private IOrderRepository repository;
         private Cart cart;
         private readonly ILogger<OrderController> _logger;
-        private readonly PaymentService _paymentService;
+        private readonly IPaymentService _paymentService;
         private readonly string _publishableKey;
 
         public OrderController(IOrderRepository repoService, Cart cartService,
-            ILogger<OrderController> logger, PaymentService paymentService,
-            IOptions<StripeSettings> stripeSettings)
+            ILogger<OrderController> logger, IPaymentService paymentService,
+            IOptions<SportsStore.Models.StripeSettings> stripeSettings)
         {
             repository = repoService;
             cart = cartService;
