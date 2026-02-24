@@ -42,7 +42,10 @@ namespace SportsStore.Controllers
                     var intent = _paymentService.CreatePaymentIntent(cart);
                     order.PaymentIntentId = intent.Id;
                     order.PaymentStatus = "Pending";
-                    TempData["OrderData"] = System.Text.Json.JsonSerializer.Serialize(order);
+                    if (TempData != null)
+                    {
+                        TempData["OrderData"] = System.Text.Json.JsonSerializer.Serialize(order);
+                    }
                     _logger.LogInformation("Payment intent created: {PaymentIntentId}", intent.Id);
                     return View("Payment", new PaymentViewModel
                     {
@@ -69,7 +72,7 @@ namespace SportsStore.Controllers
                 var intent = service.Get(paymentIntentId);
                 if (intent.Status == "succeeded")
                 {
-                    var orderJson = TempData["OrderData"]?.ToString();
+                    var orderJson = TempData?["OrderData"]?.ToString();
                     var order = System.Text.Json.JsonSerializer.Deserialize<Order>(orderJson ?? "");
                     if (order != null)
                     {
