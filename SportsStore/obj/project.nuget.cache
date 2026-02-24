@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OgBhJtnkSt8=",
+  "dgSpecHash": "/T+7X5iFqGg=",
   "success": true,
   "projectFilePath": "C:\\Users\\pablo\\source\\repos\\Pabloskymf7\\fs-lab-assignment-sportsstore-80457\\SportsStore\\SportsStore.csproj",
   "expectedPackageFiles": [
@@ -49,6 +49,7 @@
     "C:\\Users\\pablo\\.nuget\\packages\\serilog.sinks.debug\\3.0.0\\serilog.sinks.debug.3.0.0.nupkg.sha512",
     "C:\\Users\\pablo\\.nuget\\packages\\serilog.sinks.file\\7.0.0\\serilog.sinks.file.7.0.0.nupkg.sha512",
     "C:\\Users\\pablo\\.nuget\\packages\\serilog.sinks.seq\\9.0.0\\serilog.sinks.seq.9.0.0.nupkg.sha512",
+    "C:\\Users\\pablo\\.nuget\\packages\\stripe.net\\50.3.0\\stripe.net.50.3.0.nupkg.sha512",
     "C:\\Users\\pablo\\.nuget\\packages\\system.clientmodel\\1.8.0\\system.clientmodel.1.8.0.nupkg.sha512",
     "C:\\Users\\pablo\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\pablo\\.nuget\\packages\\system.composition\\9.0.0\\system.composition.9.0.0.nupkg.sha512",
