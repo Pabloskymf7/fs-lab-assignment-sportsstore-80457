@@ -30,8 +30,9 @@ builder.Services.AddDbContext<AppIdentityDbContext>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AppIdentityDbContext>();
 
-builder.Services.Configure<StripeSettings>(
+builder.Services.Configure<SportsStore.Models.StripeSettings>(
     builder.Configuration.GetSection("Stripe"));
+builder.Services.AddScoped<PaymentService>();
 
 StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
@@ -63,6 +64,9 @@ app.MapControllerRoute("category", "{category}",
 app.MapControllerRoute("pagination",
     "Products/Page{productPage}",
     new { Controller = "Home", action = "Index", productPage = 1 });
+app.MapControllerRoute("confirmPayment",
+    "Order/ConfirmPayment",
+    new { Controller = "Order", action = "ConfirmPayment" });
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 app.MapBlazorHub();
