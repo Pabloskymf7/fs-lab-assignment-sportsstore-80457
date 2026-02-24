@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SportsStore.Models;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,12 @@ builder.Services.AddDbContext<AppIdentityDbContext>(options =>
         builder.Configuration["ConnectionStrings:IdentityConnection"]));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AppIdentityDbContext>();
+
+builder.Services.Configure<SportsStore.Models.StripeSettings>(
+    builder.Configuration.GetSection("Stripe"));
+builder.Services.AddScoped<PaymentService>();
+
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
 var app = builder.Build();
 
@@ -57,6 +64,9 @@ app.MapControllerRoute("category", "{category}",
 app.MapControllerRoute("pagination",
     "Products/Page{productPage}",
     new { Controller = "Home", action = "Index", productPage = 1 });
+app.MapControllerRoute("confirmPayment",
+    "Order/ConfirmPayment",
+    new { Controller = "Order", action = "ConfirmPayment" });
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 app.MapBlazorHub();
