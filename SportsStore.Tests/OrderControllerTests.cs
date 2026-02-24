@@ -13,6 +13,13 @@ namespace SportsStore.Tests
         {
             var logger = new Mock<ILogger<OrderController>>();
             var paymentService = new Mock<IPaymentService>();
+            paymentService.Setup(p => p.CreatePaymentIntent(It.IsAny<Cart>()))
+                .Returns(new Stripe.PaymentIntent
+                {
+                    Id = "pi_fake",
+                    ClientSecret = "secret_fake",
+                    Status = "requires_payment_method"
+                });
             var stripeSettings = Options.Create(new StripeSettings
             {
                 PublishableKey = "pk_test_fake",
