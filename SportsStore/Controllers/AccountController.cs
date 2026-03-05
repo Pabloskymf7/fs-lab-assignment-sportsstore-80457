@@ -8,11 +8,13 @@ namespace SportsStore.Controllers
     {
         private UserManager<IdentityUser> userManager;
         private SignInManager<IdentityUser> signInManager;
+        private readonly ILogger<AccountController> _logger;
         public AccountController(UserManager<IdentityUser> userMgr,
-                SignInManager<IdentityUser> signInMgr)
+                SignInManager<IdentityUser> signInMgr, ILogger<AccountController> logger)
         {
             userManager = userMgr;
             signInManager = signInMgr;
+            _logger = logger;
         }
         public ViewResult Login(string returnUrl)
         {
@@ -35,9 +37,11 @@ namespace SportsStore.Controllers
                     if ((await signInManager.PasswordSignInAsync(user,
                             loginModel.Password ?? "", false, false)).Succeeded)
                     {
+                        _logger.LogInformation("User logged in: {Username}", loginModel.Name);
                         return Redirect(loginModel?.ReturnUrl ?? "/Admin");
                     }
                 }
+                _logger.LogWarning("Failed login attempt for user: {Username}", loginModel.Name);
                 ModelState.AddModelError("", "Invalid name or password");
             }
             return View(loginModel);
@@ -45,6 +49,7 @@ namespace SportsStore.Controllers
         [Authorize]
         public async Task<RedirectResult> Logout(string returnUrl = "/")
         {
+            _logger.LogInformation("User logged out: {Username}", User.Identity?.Name);
             await signInManager.SignOutAsync();
             return Redirect(returnUrl);
         }
