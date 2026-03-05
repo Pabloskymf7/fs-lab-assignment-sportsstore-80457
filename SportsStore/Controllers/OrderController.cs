@@ -82,6 +82,11 @@ namespace SportsStore.Controllers
                         cart.Clear();
                         _logger.LogInformation("Order created: {OrderId} for {CustomerName}, Payment: {PaymentIntentId}",
                             order.OrderID, order.Name, paymentIntentId);
+                        foreach (var line in order.Lines)
+                        {
+                            _logger.LogInformation("Order {OrderId} contains product: {ProductId} {ProductName} Quantity: {Quantity} Price: {Price}",
+                                order.OrderID, line.Product.ProductID, line.Product.Name, line.Quantity, line.Product.Price);
+                        }
                         return RedirectToPage("/Completed", new { orderId = order.OrderID });
                     }
                 }
