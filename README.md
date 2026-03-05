@@ -1,6 +1,7 @@
 # SportsStore – ASP.NET Core (.NET 10)
 Pablo Miguel Ferrer-80457
 Finished 25/02/2026
+I created the branch **pmf-upgrade-john-suggestions-05032026** after finishing the project to add the requirements that John sent us by email on 05/03/2026, but the project was actually completed on 25/02/2026.
 
 ## Upgrade Steps
 
